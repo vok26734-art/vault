@@ -1,7 +1,7 @@
 body {
     background-color: #0b0b0b;
     color: white;
-    font-family: sans-serif;
+    font-family: 'Segoe UI', sans-serif;
     margin: 0;
 }
 
@@ -9,16 +9,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 40px;
+    padding: 15px 40px;
     background: #111;
-    border-bottom: 2px solid #222;
-}
-
-.user-section {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    font-weight: bold;
+    border-bottom: 2px solid #007bff;
 }
 
 .user-avatar {
@@ -29,11 +22,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-weight: bold;
 }
 
-header { text-align: center; padding-bottom: 20px; }
-
-/* Modal / Popup Styling */
+/* Modal */
 .modal {
     position: fixed;
     z-index: 100;
@@ -46,40 +38,43 @@ header { text-align: center; padding-bottom: 20px; }
 
 .modal-content {
     background: #1a1a1a;
-    padding: 30px;
-    border-radius: 15px;
+    padding: 40px;
+    border-radius: 20px;
     text-align: center;
-    border: 1px solid #333;
+    border: 1px solid #007bff;
 }
 
-.modal-content input {
-    padding: 10px;
-    margin-bottom: 10px;
-    display: block;
-    width: 100%;
-    border-radius: 5px;
-    border: none;
-}
-
-/* Grid & Cards */
+/* Grid & Cards with Animations */
 .game-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
     padding: 20px 40px;
 }
 
 .game-card {
     background: #181818;
-    border-radius: 12px;
-    padding: 10px;
+    border-radius: 15px;
+    padding: 15px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     border: 1px solid #222;
     text-align: center;
 }
 
-.game-card:hover { transform: scale(1.05); border-color: #007bff; }
-.game-card img { width: 100%; border-radius: 8px; }
+.game-card:hover {
+    transform: scale(1.05) translateY(-5px);
+    border-color: #007bff;
+    box-shadow: 0 10px 20px rgba(0, 123, 255, 0.2);
+}
 
-#gameFrame { width: 90%; height: 75vh; margin: 20px auto; display: block; border: 2px solid #333; }
+.game-card img { width: 100%; border-radius: 10px; margin-bottom: 10px; }
+
+/* Leaderboard Table */
+#leaderboardSection { padding: 20px 40px; }
+table { width: 100%; max-width: 600px; margin: 0 auto; border-collapse: collapse; background: #111; border-radius: 10px; overflow: hidden; }
+th, td { padding: 12px; border-bottom: 1px solid #222; text-align: left; }
+th { background: #007bff; color: white; }
+
+#gameFrame { width: 90%; height: 70vh; margin: 20px auto; display: block; border-radius: 15px; border: 2px solid #333; }
+.score-input { margin-top: 10px; }

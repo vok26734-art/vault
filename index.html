@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vault Games | v2.1 Pro</title>
+    <title>Vault Games | v3.0 Elite</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-mode">
 
     <div id="loadingOverlay" class="loader-wrapper" style="display:none;">
         <div class="loader"></div>
-        <p id="loaderText">Initializing Secure Connection...</p>
+        <p id="loaderText">Syncing with Vault Cloud...</p>
     </div>
 
     <header>
         <div class="top-bar">
-            <div class="logo">⚡ Vault<span>Games</span></div>
-            <div id="userSection" class="user-section">
-                </div>
+            <div class="logo" onclick="location.reload()">⚡ Vault<span>Games</span></div>
+            <div id="userSection" class="user-section"></div>
         </div>
         <nav class="sub-nav">
             <div class="search-box">
@@ -34,19 +33,19 @@
 
     <div id="loginModal" class="modal" style="display:none;">
         <div class="modal-content">
-            <h2>System Encrypted</h2>
-            <p>Define your operative identity</p>
+            <h2>Accessing Vault...</h2>
+            <p>Create your operative profile to save XP</p>
             <input type="text" id="usernameInput" placeholder="Operative Name">
-            <button class="play-btn" onclick="saveProfile()">Begin Mission</button>
+            <button class="play-btn" onclick="saveProfile()">Begin Journey</button>
         </div>
     </div>
 
     <main id="mainContent">
         <section id="featuredSection" class="hero-section">
             <div class="hero-content">
-                <span class="badge">TOP PICK</span>
+                <span class="badge">MISSION OF THE DAY</span>
                 <h1 id="featuredTitle">Vaulting...</h1>
-                <button class="play-btn" id="featuredPlayBtn">Launch Game</button>
+                <button class="play-btn" id="featuredPlayBtn">Launch Now</button>
             </div>
         </section>
 
@@ -70,7 +69,7 @@
         </section>
 
         <section class="shelf" id="recentGames">
-            <h2>Recently Played</h2>
+            <h2>Continue Playing</h2>
             <div id="recentList" class="game-grid horizontal"></div>
         </section>
 
@@ -95,7 +94,7 @@
     <footer class="status-bar">
         <div class="status-item"><span class="dot"></span> <span id="systemStatus">System Online</span></div>
         <div class="status-item" id="currentTime">00:00:00</div>
-        <div class="status-item">v2.1.0-PRO</div>
+        <div class="status-item">v3.0.0-PRO</div>
     </footer>
 
     <script src="script.js"></script>

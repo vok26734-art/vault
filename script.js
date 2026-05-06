@@ -1,38 +1,41 @@
-// Function to load a game into the iframe
-function loadGame(gameUrl) {
+function loadGame(url) {
     const container = document.getElementById('gamePlayerContainer');
     const frame = document.getElementById('gameFrame');
     
-    frame.src = gameUrl;
+    frame.src = url;
     container.style.display = 'block';
-
-    // Save to "Recently Played" system
-    saveToRecent(gameUrl);
+    
+    // Hide the libraries while playing
+    document.getElementById('recentGames').style.display = 'none';
+    document.getElementById('gameLibrary').style.display = 'none';
 }
 
-// Function to close the player
 function closeGame() {
-    document.getElementById('gamePlayerContainer').style.display = 'none';
-    document.getElementById('gameFrame').src = "";
+    const container = document.getElementById('gamePlayerContainer');
+    const frame = document.getElementById('gameFrame');
+    
+    frame.src = "";
+    container.style.display = 'none';
+    
+    // Show the libraries again
+    document.getElementById('recentGames').style.display = 'block';
+    document.getElementById('gameLibrary').style.display = 'block';
 }
 
-// Search Logic
-document.getElementById('searchBar').addEventListener('input', (e) => {
-    const term = e.target.value.toLowerCase();
-    const cards = document.querySelectorAll('.game-card');
-
-    cards.forEach(card => {
-        const title = card.querySelector('h3').innerText.toLowerCase();
-        card.style.display = title.includes(term) ? 'block' : 'none';
-    });
-});
-
-// Save to Local Storage for "Recently Played"
-function saveToRecent(url) {
-    let recent = JSON.parse(localStorage.getItem('vaultRecent')) || [];
-    if (!recent.includes(url)) {
-        recent.unshift(url); 
-        if (recent.length > 6) recent.pop();
-        localStorage.setItem('vaultRecent', JSON.stringify(recent));
+function toggleFullscreen() {
+    const frame = document.getElementById('gameFrame');
+    if (frame.requestFullscreen) {
+        frame.requestFullscreen();
     }
 }
+
+// Basic search filter
+document.getElementById('searchBar').addEventListener('input', (e) => {
+    let filter = e.target.value.toLowerCase();
+    let cards = document.querySelectorAll('.game-card');
+    
+    cards.forEach(card => {
+        let title = card.querySelector('h3').innerText.toLowerCase();
+        card.style.display = title.includes(filter) ? "block" : "none";
+    });
+});

@@ -9,7 +9,11 @@
 <body class="dark-mode">
 
     <header>
-        <h1>Vault Games</h1>
+        <div class="top-bar">
+            <h1>Vault Games</h1>
+            <div id="userSection" class="user-section">
+                </div>
+        </div>
         <nav>
             <input type="text" id="searchBar" placeholder="Search for games...">
             <div class="categories">
@@ -17,14 +21,21 @@
                 <button onclick="filterCategory('action')">Action</button>
                 <button onclick="filterCategory('retro')">Retro</button>
             </div>
-            <button id="musicToggle">🎵 Music: ON</button>
         </nav>
     </header>
+
+    <div id="loginModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h2>Create Profile</h2>
+            <input type="text" id="usernameInput" placeholder="Enter Username">
+            <button onclick="saveProfile()">Start Playing</button>
+        </div>
+    </div>
 
     <main>
         <section id="gamePlayerContainer" style="display:none;">
             <div class="player-controls">
-                <button onclick="closeGame()">✖ Close Game</button>
+                <button onclick="closeGame()">✖ Close</button>
                 <button onclick="toggleFullscreen()">⛶ Fullscreen</button>
             </div>
             <iframe id="gameFrame" src="" frameborder="0" allowfullscreen></iframe>
@@ -32,14 +43,12 @@
 
         <section id="recentGames">
             <h2>Recently Played</h2>
-            <div id="recentList" class="game-grid">
-                </div>
+            <div id="recentList" class="game-grid"></div>
         </section>
 
         <section id="gameLibrary">
             <h2>All Games</h2>
-            <div id="gameGrid" class="game-grid">
-                </div>
+            <div id="gameGrid" class="game-grid"></div>
         </section>
     </main>
 

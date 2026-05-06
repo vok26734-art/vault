@@ -1,41 +1,72 @@
+// ADD YOUR GAMES HERE
+const gamesList = [
+    { 
+        title: "Doodle Jump", 
+        img: "https://via.placeholder.com/200x120", 
+        url: "https://example.com/game1", 
+        category: "action" 
+    },
+    { 
+        title: "Retro Space", 
+        img: "https://via.placeholder.com/200x120", 
+        url: "https://example.com/game2", 
+        category: "retro" 
+    },
+    { 
+        title: "City Racer", 
+        img: "https://via.placeholder.com/200x120", 
+        url: "https://example.com/game3", 
+        category: "action" 
+    }
+];
+
+// Load the library on startup
+window.onload = () => {
+    displayGames(gamesList);
+};
+
+function displayGames(games) {
+    const grid = document.getElementById('gameGrid');
+    grid.innerHTML = ''; 
+
+    games.forEach(game => {
+        const card = document.createElement('div');
+        card.className = 'game-card';
+        card.innerHTML = `
+            <img src="${game.img}" alt="${game.title}">
+            <h3>${game.title}</h3>
+        `;
+        card.onclick = () => loadGame(game.url);
+        grid.appendChild(card);
+    });
+}
+
 function loadGame(url) {
-    const container = document.getElementById('gamePlayerContainer');
-    const frame = document.getElementById('gameFrame');
-    
-    frame.src = url;
-    container.style.display = 'block';
-    
-    // Hide the libraries while playing
-    document.getElementById('recentGames').style.display = 'none';
+    document.getElementById('gameFrame').src = url;
+    document.getElementById('gamePlayerContainer').style.display = 'block';
     document.getElementById('gameLibrary').style.display = 'none';
+    document.getElementById('recentGames').style.display = 'none';
 }
 
 function closeGame() {
-    const container = document.getElementById('gamePlayerContainer');
-    const frame = document.getElementById('gameFrame');
-    
-    frame.src = "";
-    container.style.display = 'none';
-    
-    // Show the libraries again
-    document.getElementById('recentGames').style.display = 'block';
+    document.getElementById('gameFrame').src = "";
+    document.getElementById('gamePlayerContainer').style.display = 'none';
     document.getElementById('gameLibrary').style.display = 'block';
+    document.getElementById('recentGames').style.display = 'block';
 }
 
-function toggleFullscreen() {
-    const frame = document.getElementById('gameFrame');
-    if (frame.requestFullscreen) {
-        frame.requestFullscreen();
+function filterCategory(cat) {
+    if (cat === 'all') {
+        displayGames(gamesList);
+    } else {
+        const filtered = gamesList.filter(g => g.category === cat);
+        displayGames(filtered);
     }
 }
 
-// Basic search filter
-document.getElementById('searchBar').addEventListener('input', (e) => {
-    let filter = e.target.value.toLowerCase();
-    let cards = document.querySelectorAll('.game-card');
-    
-    cards.forEach(card => {
-        let title = card.querySelector('h3').innerText.toLowerCase();
-        card.style.display = title.includes(filter) ? "block" : "none";
-    });
-});
+// Search Logic
+document.getElementById('searchBar').oninput = (e) => {
+    const term = e.target.value.toLowerCase();
+    const filtered = gamesList.filter(g => g.title.toLowerCase().includes(term));
+    displayGames(filtered);
+};

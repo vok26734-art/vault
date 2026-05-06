@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vault Games | Dashboard</title>
+    <title>Vault Games | Pro Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-mode">
@@ -15,7 +15,7 @@
         </div>
         <nav>
             <div class="search-container">
-                <input type="text" id="searchBar" placeholder="Search 100+ games...">
+                <input type="text" id="searchBar" placeholder="Search the Vault...">
             </div>
             <div class="categories">
                 <button class="cat-btn active" onclick="filterCategory('all')">All</button>
@@ -27,50 +27,56 @@
 
     <div id="loginModal" class="modal" style="display:none;">
         <div class="modal-content">
-            <h2>Welcome to the Vault</h2>
-            <p>Create your player profile to save progress</p>
-            <input type="text" id="usernameInput" placeholder="Choose a Username">
-            <button class="main-btn" onclick="saveProfile()">Enter Vault</button>
+            <h2>Welcome, Player 1</h2>
+            <p>Enter the Vault to start earning badges</p>
+            <input type="text" id="usernameInput" placeholder="Enter Username">
+            <button class="main-btn" onclick="saveProfile()">Begin Journey</button>
         </div>
     </div>
 
     <main id="mainContent">
         <section id="featuredSection" class="hero-section">
             <div class="hero-content">
-                <span class="badge">FEATURED</span>
-                <h1 id="featuredTitle">Loading...</h1>
-                <button class="play-btn" id="featuredPlayBtn">Play Now</button>
+                <span class="badge">TRENDING NOW</span>
+                <h1 id="featuredTitle">Loading Vault...</h1>
+                <button class="play-btn" id="featuredPlayBtn">Launch Game</button>
             </div>
         </section>
 
         <section id="gamePlayerContainer" style="display:none;">
             <div class="player-header">
-                <button class="back-btn" onclick="closeGame()">← Back to Library</button>
+                <button class="back-btn" onclick="closeGame()">← Quit Game</button>
                 <button class="fs-btn" onclick="toggleFullscreen()">⛶ Fullscreen</button>
             </div>
             <iframe id="gameFrame" src="" frameborder="0" allowfullscreen></iframe>
             <div class="score-panel">
-                <input type="number" id="manualScore" placeholder="Enter High Score">
-                <button onclick="submitScore()">Submit Score</button>
+                <input type="number" id="manualScore" placeholder="Enter New Score">
+                <button onclick="submitScore()">Submit High Score</button>
             </div>
         </section>
 
+        <section class="shelf" id="achievementShelf">
+            <h2>Your Achievements</h2>
+            <div id="badgeList" class="badge-container">
+                </div>
+        </section>
+
         <section class="shelf" id="recentGames">
-            <h2>Recently Played</h2>
+            <h2>Continue Playing</h2>
             <div id="recentList" class="game-grid"></div>
         </section>
 
         <section class="shelf" id="gameLibrary">
-            <h2>Discover Games</h2>
+            <h2>The Library</h2>
             <div id="gameGrid" class="game-grid"></div>
         </section>
 
         <section class="shelf" id="leaderboardSection">
-            <h2>Your Trophy Room</h2>
+            <h2>Trophy Room</h2>
             <div class="stats-container">
                 <table id="leaderboardTable">
                     <thead>
-                        <tr><th>Game</th><th>High Score</th></tr>
+                        <tr><th>Game</th><th>Personal Best</th></tr>
                     </thead>
                     <tbody id="leaderboardBody"></tbody>
                 </table>

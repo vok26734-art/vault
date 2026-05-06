@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vault Games | Pro Dashboard</title>
+    <title>Vault Games | v2.0</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-mode">
 
     <div id="loadingOverlay" class="loader-wrapper" style="display:none;">
         <div class="loader"></div>
-        <p>Syncing with Vault Engine...</p>
+        <p>Initializing Secure Connection...</p>
     </div>
 
     <header>
@@ -26,23 +26,24 @@
                 <button class="cat-btn active" onclick="filterCategory('all')">All</button>
                 <button class="cat-btn" onclick="filterCategory('action')">Action</button>
                 <button class="cat-btn" onclick="filterCategory('retro')">Retro</button>
+                <button class="cat-btn" onclick="filterCategory('favs')">❤️ Favorites</button>
             </div>
         </nav>
     </header>
 
     <div id="loginModal" class="modal" style="display:none;">
         <div class="modal-content">
-            <h2>Access Granted</h2>
-            <p>Create your operative profile</p>
+            <h2>System Encrypted</h2>
+            <p>Define your operative identity</p>
             <input type="text" id="usernameInput" placeholder="Operative Name">
-            <button class="play-btn" onclick="saveProfile()">Enter Vault</button>
+            <button class="play-btn" onclick="saveProfile()">Begin Mission</button>
         </div>
     </div>
 
     <main id="mainContent">
         <section id="featuredSection" class="hero-section">
             <div class="hero-content">
-                <span class="badge">TRENDING NOW</span>
+                <span class="badge">TOP PICK</span>
                 <h1 id="featuredTitle">Vaulting...</h1>
                 <button class="play-btn" id="featuredPlayBtn">Launch Game</button>
             </div>
@@ -50,7 +51,7 @@
 
         <section id="gamePlayerContainer" style="display:none;">
             <div class="player-header">
-                <button class="back-btn" onclick="closeGame()">← Back to Library</button>
+                <button class="back-btn" onclick="closeGame()">← Abort Mission</button>
                 <button class="fs-btn" onclick="toggleFullscreen()">⛶ Fullscreen</button>
             </div>
             <div class="iframe-wrapper">
@@ -63,17 +64,17 @@
         </section>
 
         <section class="shelf" id="achievementShelf">
-            <h2>Your Trophies</h2>
+            <h2>Trophies & Badges</h2>
             <div id="badgeList" class="badge-container"></div>
         </section>
 
         <section class="shelf" id="recentGames">
-            <h2>Continue Playing</h2>
+            <h2>Recently Played</h2>
             <div id="recentList" class="game-grid horizontal"></div>
         </section>
 
         <section class="shelf" id="gameLibrary">
-            <h2>All Missions</h2>
+            <h2>Available Missions</h2>
             <div id="gameGrid" class="game-grid"></div>
         </section>
 
@@ -89,6 +90,12 @@
             </div>
         </section>
     </main>
+
+    <footer class="status-bar">
+        <div class="status-item"><span class="dot"></span> System Online</div>
+        <div class="status-item" id="currentTime">00:00:00</div>
+        <div class="status-item">v2.0.4-Beta</div>
+    </footer>
 
     <script src="script.js"></script>
 </body>

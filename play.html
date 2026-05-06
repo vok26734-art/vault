@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playing Game | My Arcade</title>
+    <link rel="stylesheet" href="style.css"> <style>
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        iframe {
+            width: 800px;
+            height: 600px;
+            border: 4px solid #333;
+            border-radius: 10px;
+            background: #000;
+        }
+        .controls {
+            margin-top: 15px;
+            display: flex;
+            gap: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="btn">Back to Home</a>
+    </nav>
+
+    <div class="game-container">
+        <h1 id="game-title">Loading...</h1>
+        <iframe id="game-frame" src=""></iframe>
+        
+        <div class="controls">
+            <button class="btn" onclick="toggleFullscreen()">Fullscreen 🖥️</button>
+            <button class="btn" onclick="location.reload()">Restart 🔄</button>
+        </div>
+    </div>
+
+    <script>
+        // Get the game ID from the URL (e.g., play.html?id=snake)
+        const params = new URLSearchParams(window.location.search);
+        const gameId = params.get("id");
+
+        // Fetch your games.json to find the right game
+        fetch("data/games.json")
+            .then(res => res.json())
+            .then(games => {
+                const game = games.find(g => g.id === gameId);
+                if (game) {
+                    document.getElementById("game-title").innerText = game.title;
+                    document.getElementById("game-frame").src = game.url;
+                    document.title = "Playing " + game.title;
+                } else {
+                    document.getElementById("game-title").innerText = "Game Not Found";
+                }
+            });
+
+        function toggleFullscreen() {
+            const elem = document.getElementById("game-frame");
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            }
+        }
+    </script>
+</body>
+</html>

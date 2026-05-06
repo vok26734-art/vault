@@ -11,8 +11,7 @@
     <header>
         <div class="top-bar">
             <h1>Vault Games</h1>
-            <div id="userSection" class="user-section">
-                </div>
+            <div id="userSection" class="user-section"></div>
         </div>
         <nav>
             <input type="text" id="searchBar" placeholder="Search for games...">
@@ -39,11 +38,25 @@
                 <button onclick="toggleFullscreen()">⛶ Fullscreen</button>
             </div>
             <iframe id="gameFrame" src="" frameborder="0" allowfullscreen></iframe>
+            <div class="score-input">
+                <input type="number" id="manualScore" placeholder="Enter Score">
+                <button onclick="submitScore()">Save Score</button>
+            </div>
         </section>
 
         <section id="recentGames">
             <h2>Recently Played</h2>
             <div id="recentList" class="game-grid"></div>
+        </section>
+
+        <section id="leaderboardSection">
+            <h2>Your High Scores</h2>
+            <table id="leaderboardTable">
+                <thead>
+                    <tr><th>Game</th><th>Score</th></tr>
+                </thead>
+                <tbody id="leaderboardBody"></tbody>
+            </table>
         </section>
 
         <section id="gameLibrary">

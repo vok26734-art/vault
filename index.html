@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vault Games</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-mode">
+
+    <header>
+        <h1>Vault Games</h1>
+        <nav>
+            <input type="text" id="searchBar" placeholder="Search for games...">
+            <div class="categories">
+                <button onclick="filterCategory('all')">All</button>
+                <button onclick="filterCategory('action')">Action</button>
+                <button onclick="filterCategory('retro')">Retro</button>
+            </div>
+            <button id="musicToggle">🎵 Music: ON</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="gamePlayerContainer" style="display:none;">
+            <button onclick="closeGame()">Back to Home</button>
+            <iframe id="gameFrame" src="" frameborder="0" allowfullscreen></iframe>
+            <button onclick="toggleFullscreen()">Fullscreen</button>
+        </section>
+
+        <section id="recentGames">
+            <h2>Recently Played</h2>
+            <div id="recentList" class="game-grid"></div>
+        </section>
+
+        <section id="gameLibrary">
+            <h2>All Games</h2>
+            <div id="gameGrid" class="game-grid">
+                <div class="game-card" data-category="action" onclick="loadGame('URL_HERE')">
+                    <img src="assets/game1.png" alt="Game Title">
+                    <h3>Game Title</h3>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

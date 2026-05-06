@@ -1,59 +1,81 @@
 body {
-    background-color: #0f0f0f;
+    background-color: #0b0b0b;
     color: white;
-    font-family: sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     text-align: center;
 }
 
-header { padding: 20px; border-bottom: 1px solid #333; }
-nav { margin-top: 10px; }
+header {
+    padding: 30px;
+    background: #111;
+    border-bottom: 2px solid #222;
+}
 
-input {
-    padding: 10px;
-    width: 250px;
-    border-radius: 20px;
-    border: none;
+input#searchBar {
+    padding: 12px 20px;
+    width: 300px;
+    border-radius: 25px;
+    border: 1px solid #333;
+    background: #1a1a1a;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.categories button {
     background: #222;
     color: white;
+    border: 1px solid #444;
+    padding: 8px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.categories button:hover {
+    background: #444;
 }
 
 .game-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 20px;
-    padding: 20px;
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .game-card {
-    background: #1a1a1a;
-    border: 1px solid #333;
-    border-radius: 12px;
+    background: #181818;
+    border-radius: 15px;
     padding: 10px;
-    width: 160px;
+    transition: transform 0.3s, box-shadow 0.3s;
     cursor: pointer;
-    transition: transform 0.2s, border-color 0.2s;
+    border: 1px solid #222;
 }
 
 .game-card:hover {
-    transform: scale(1.05);
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
     border-color: #555;
 }
 
 .game-card img {
     width: 100%;
-    border-radius: 8px;
-    margin-bottom: 8px;
+    aspect-ratio: 16/10;
+    object-fit: cover;
+    border-radius: 10px;
 }
 
 #gameFrame {
     width: 90%;
-    height: 70vh;
-    border: 2px solid #333;
-    border-radius: 10px;
-    margin-top: 10px;
+    height: 80vh;
+    background: black;
+    border-radius: 15px;
+    border: 3px solid #333;
 }
 
-.player-controls { margin-bottom: 10px; }
-button { cursor: pointer; padding: 8px 15px; border-radius: 5px; border: none; }
+.player-controls {
+    margin: 20px;
+}

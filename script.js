@@ -23,15 +23,57 @@ window.onload = () => {
     updateLeaderboard();
     renderBadges();
     startClock();
+    updateXPBar();
 };
 
+// --- SYSTEM UTILS ---
 function startClock() {
     setInterval(() => {
-        const now = new Date();
-        document.getElementById('currentTime').innerText = now.toLocaleTimeString();
+        document.getElementById('currentTime').innerText = new Date().toLocaleTimeString();
     }, 1000);
 }
 
+function logStatus(msg) {
+    document.getElementById('systemStatus').innerText = msg;
+    setTimeout(() => document.getElementById('systemStatus').innerText = "System Online", 3000);
+}
+
+// --- LEVEL & XP SYSTEM ---
+function addXP(amount) {
+    let xp = parseInt(localStorage.getItem('vaultXP')) || 0;
+    let lvl = parseInt(localStorage.getItem('vaultLvl')) || 1;
+    
+    xp += amount;
+    if (xp >= 100) {
+        xp = 0;
+        lvl += 1;
+        localStorage.setItem('vaultLvl', lvl);
+        logStatus("LEVEL UP! NOW LEVEL " + lvl);
+        alert("🎉 LEVEL UP! You are now Level " + lvl);
+    }
+    localStorage.setItem('vaultXP', xp);
+    updateXPBar();
+}
+
+function updateXPBar() {
+    const xp = parseInt(localStorage.getItem('vaultXP')) || 0;
+    const lvl = parseInt(localStorage.getItem('vaultLvl')) || 1;
+    const user = localStorage.getItem('vaultUser');
+    
+    if (user) {
+        const userSection = document.getElementById('userSection');
+        userSection.innerHTML = `
+            <div class="xp-container">
+                <div class="xp-label">LEVEL ${lvl} - ${xp}% XP</div>
+                <div class="xp-bar-bg"><div class="xp-bar-fill" style="width: ${xp}%"></div></div>
+            </div>
+            <div style="text-align:right"><strong>${user}</strong></div>
+            <div style="width:35px; height:35px; background:var(--primary); color:#000; border-radius:5px; display:flex; align-items:center; justify-content:center; margin-left:15px; font-weight:900;">${user[0].toUpperCase()}</div>
+        `;
+    }
+}
+
+// --- LOGIN & PROFILE ---
 function checkLogin() {
     const auth = localStorage.getItem('vaultAuth');
     const user = localStorage.getItem('vaultUser');
@@ -45,34 +87,35 @@ function checkLogin() {
     if (!user) document.getElementById('loginModal').style.display = 'flex';
     else {
         document.getElementById('loginModal').style.display = 'none';
-        document.getElementById('userSection').innerHTML = `
-            <div style="text-align:right">
-                <div style="font-size:10px; color:var(--primary); letter-spacing:1px;">ACTIVE AGENT</div>
-                <strong>${user}</strong>
-            </div>
-            <div style="width:35px; height:35px; background:var(--primary); color:#000; border-radius:5px; display:flex; align-items:center; justify-content:center; margin-left:15px; font-weight:900;">${user[0].toUpperCase()}</div>
-        `;
+        updateXPBar();
     }
 }
 
 function saveProfile() {
     const n = document.getElementById('usernameInput').value;
-    if (n.trim()) { localStorage.setItem('vaultUser', n); checkLogin(); }
+    if (n.trim()) {
+        localStorage.setItem('vaultUser', n);
+        localStorage.setItem('vaultLvl', 1);
+        localStorage.setItem('vaultXP', 0);
+        checkLogin();
+    }
 }
 
-function showLoader(callback) {
+function logout() { localStorage.clear(); location.reload(); }
+
+// --- GAME LOGIC ---
+function loadGame(game) {
     const loader = document.getElementById('loadingOverlay');
+    const loaderText = document.getElementById('loaderText');
+    loaderText.innerText = "Fetching " + game.title + "...";
     loader.style.display = 'flex';
+
     setTimeout(() => {
         loader.style.display = 'none';
-        if (callback) callback();
-    }, 1200);
-}
-
-function loadGame(game) {
-    showLoader(() => {
         currentGame = game;
+        addXP(20); // Reward for playing
         unlockBadge('first_play');
+        
         let recent = JSON.parse(localStorage.getItem('recentGames')) || [];
         recent = [game, ...recent.filter(g => g.title !== game.title)].slice(0, 5);
         localStorage.setItem('recentGames', JSON.stringify(recent));
@@ -81,7 +124,7 @@ function loadGame(game) {
         document.getElementById('gamePlayerContainer').style.display = 'block';
         document.querySelectorAll('.shelf, .hero-section').forEach(s => s.style.display = 'none');
         displayRecent();
-    });
+    }, 1200);
 }
 
 function closeGame() {
@@ -90,22 +133,25 @@ function closeGame() {
     document.querySelectorAll('.shelf, .hero-section').forEach(s => s.style.display = 'block');
 }
 
-function toggleFav(title) {
-    let favs = JSON.parse(localStorage.getItem('vaultFavs')) || [];
-    if (favs.includes(title)) {
-        favs = favs.filter(t => t !== title);
-    } else {
-        favs.push(title);
-        unlockBadge('fav_badge');
+function submitScore() {
+    const val = document.getElementById('manualScore').value;
+    if (val && currentGame) {
+        addXP(50); // Big reward for high scores
+        unlockBadge('high_score');
+        let scores = JSON.parse(localStorage.getItem('vaultScores')) || {};
+        if (!scores[currentGame.title] || parseInt(val) > parseInt(scores[currentGame.title])) {
+            scores[currentGame.title] = val;
+            localStorage.setItem('vaultScores', JSON.stringify(scores));
+        }
+        updateLeaderboard();
+        logStatus("DATA SYNCED");
     }
-    localStorage.setItem('vaultFavs', JSON.stringify(favs));
-    displayGames(gamesList); // Refresh UI
 }
 
+// --- UI UPDATES ---
 function displayGames(list) {
     const favs = JSON.parse(localStorage.getItem('vaultFavs')) || [];
-    const grid = document.getElementById('gameGrid');
-    grid.innerHTML = list.map(g => {
+    document.getElementById('gameGrid').innerHTML = list.map(g => {
         const isFav = favs.includes(g.title);
         return `
             <div class="game-card" onclick='loadGame(${JSON.stringify(g)})' oncontextmenu="event.preventDefault(); toggleFav('${g.title}')">
@@ -117,31 +163,22 @@ function displayGames(list) {
     }).join('');
 }
 
+function toggleFav(title) {
+    let favs = JSON.parse(localStorage.getItem('vaultFavs')) || [];
+    if (favs.includes(title)) favs = favs.filter(t => t !== title);
+    else { favs.push(title); unlockBadge('fav_badge'); addXP(10); }
+    localStorage.setItem('vaultFavs', JSON.stringify(favs));
+    displayGames(gamesList);
+}
+
 function filterCategory(cat) {
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
     event.target.classList.add('active');
-
     if (cat === 'favs') {
         const favNames = JSON.parse(localStorage.getItem('vaultFavs')) || [];
-        const filtered = gamesList.filter(g => favNames.includes(g.title));
-        displayGames(filtered);
+        displayGames(gamesList.filter(g => favNames.includes(g.title)));
     } else {
-        const filtered = cat === 'all' ? gamesList : gamesList.filter(g => g.category === cat);
-        displayGames(filtered);
-    }
-}
-
-function submitScore() {
-    const val = document.getElementById('manualScore').value;
-    if (val && currentGame) {
-        unlockBadge('high_score');
-        let scores = JSON.parse(localStorage.getItem('vaultScores')) || {};
-        if (!scores[currentGame.title] || parseInt(val) > parseInt(scores[currentGame.title])) {
-            scores[currentGame.title] = val;
-            localStorage.setItem('vaultScores', JSON.stringify(scores));
-        }
-        updateLeaderboard();
-        alert("Encrypted Score Logged.");
+        displayGames(cat === 'all' ? gamesList : gamesList.filter(g => g.category === cat));
     }
 }
 
@@ -168,6 +205,7 @@ function unlockBadge(id) {
         unlocked.push(id);
         localStorage.setItem('vaultBadges', JSON.stringify(unlocked));
         renderBadges();
+        addXP(30);
     }
 }
 

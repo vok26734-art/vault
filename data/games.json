@@ -1,0 +1,9 @@
+[
+  {
+    "id": "snake",
+    "title": "Retro Snake",
+    "img": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400",
+    "url": "games/snake/index.html",
+    "category": "retro"
+  }
+]

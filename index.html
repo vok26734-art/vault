@@ -3,65 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vault Games</title>
+    <title>Vault Games | Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-mode">
 
     <header>
         <div class="top-bar">
-            <h1>Vault Games</h1>
+            <div class="logo">⚡ Vault<span>Games</span></div>
             <div id="userSection" class="user-section"></div>
         </div>
         <nav>
-            <input type="text" id="searchBar" placeholder="Search for games...">
+            <div class="search-container">
+                <input type="text" id="searchBar" placeholder="Search 100+ games...">
+            </div>
             <div class="categories">
-                <button onclick="filterCategory('all')">All</button>
-                <button onclick="filterCategory('action')">Action</button>
-                <button onclick="filterCategory('retro')">Retro</button>
+                <button class="cat-btn active" onclick="filterCategory('all')">All</button>
+                <button class="cat-btn" onclick="filterCategory('action')">Action</button>
+                <button class="cat-btn" onclick="filterCategory('retro')">Retro</button>
             </div>
         </nav>
     </header>
 
     <div id="loginModal" class="modal" style="display:none;">
         <div class="modal-content">
-            <h2>Create Profile</h2>
-            <input type="text" id="usernameInput" placeholder="Enter Username">
-            <button onclick="saveProfile()">Start Playing</button>
+            <h2>Welcome to the Vault</h2>
+            <p>Create your player profile to save progress</p>
+            <input type="text" id="usernameInput" placeholder="Choose a Username">
+            <button class="main-btn" onclick="saveProfile()">Enter Vault</button>
         </div>
     </div>
 
-    <main>
-        <section id="gamePlayerContainer" style="display:none;">
-            <div class="player-controls">
-                <button onclick="closeGame()">✖ Close</button>
-                <button onclick="toggleFullscreen()">⛶ Fullscreen</button>
-            </div>
-            <iframe id="gameFrame" src="" frameborder="0" allowfullscreen></iframe>
-            <div class="score-input">
-                <input type="number" id="manualScore" placeholder="Enter Score">
-                <button onclick="submitScore()">Save Score</button>
+    <main id="mainContent">
+        <section id="featuredSection" class="hero-section">
+            <div class="hero-content">
+                <span class="badge">FEATURED</span>
+                <h1 id="featuredTitle">Loading...</h1>
+                <button class="play-btn" id="featuredPlayBtn">Play Now</button>
             </div>
         </section>
 
-        <section id="recentGames">
+        <section id="gamePlayerContainer" style="display:none;">
+            <div class="player-header">
+                <button class="back-btn" onclick="closeGame()">← Back to Library</button>
+                <button class="fs-btn" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+            </div>
+            <iframe id="gameFrame" src="" frameborder="0" allowfullscreen></iframe>
+            <div class="score-panel">
+                <input type="number" id="manualScore" placeholder="Enter High Score">
+                <button onclick="submitScore()">Submit Score</button>
+            </div>
+        </section>
+
+        <section class="shelf" id="recentGames">
             <h2>Recently Played</h2>
             <div id="recentList" class="game-grid"></div>
         </section>
 
-        <section id="leaderboardSection">
-            <h2>Your High Scores</h2>
-            <table id="leaderboardTable">
-                <thead>
-                    <tr><th>Game</th><th>Score</th></tr>
-                </thead>
-                <tbody id="leaderboardBody"></tbody>
-            </table>
+        <section class="shelf" id="gameLibrary">
+            <h2>Discover Games</h2>
+            <div id="gameGrid" class="game-grid"></div>
         </section>
 
-        <section id="gameLibrary">
-            <h2>All Games</h2>
-            <div id="gameGrid" class="game-grid"></div>
+        <section class="shelf" id="leaderboardSection">
+            <h2>Your Trophy Room</h2>
+            <div class="stats-container">
+                <table id="leaderboardTable">
+                    <thead>
+                        <tr><th>Game</th><th>High Score</th></tr>
+                    </thead>
+                    <tbody id="leaderboardBody"></tbody>
+                </table>
+            </div>
         </section>
     </main>
 

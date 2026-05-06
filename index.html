@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vault Games | v2.0</title>
+    <title>Vault Games | v2.1 Pro</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-mode">
 
     <div id="loadingOverlay" class="loader-wrapper" style="display:none;">
         <div class="loader"></div>
-        <p>Initializing Secure Connection...</p>
+        <p id="loaderText">Initializing Secure Connection...</p>
     </div>
 
     <header>
         <div class="top-bar">
             <div class="logo">⚡ Vault<span>Games</span></div>
-            <div id="userSection" class="user-section"></div>
+            <div id="userSection" class="user-section">
+                </div>
         </div>
         <nav class="sub-nav">
             <div class="search-box">
@@ -92,9 +93,9 @@
     </main>
 
     <footer class="status-bar">
-        <div class="status-item"><span class="dot"></span> System Online</div>
+        <div class="status-item"><span class="dot"></span> <span id="systemStatus">System Online</span></div>
         <div class="status-item" id="currentTime">00:00:00</div>
-        <div class="status-item">v2.0.4-Beta</div>
+        <div class="status-item">v2.1.0-PRO</div>
     </footer>
 
     <script src="script.js"></script>
